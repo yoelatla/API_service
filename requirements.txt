@@ -4,7 +4,4 @@ sqlalchemy==2.0.51      # ORM
 psycopg2-binary==2.9.12 # Postgres driver used by SQLAlchemy
 python-dotenv==1.2.2    # loads .env into environment variables
 pydantic==2.13.4        # request/response validation (schemas.py)
-alembic==1.18.5         # database migrations
-pytest==9.1.1           # test runner
-httpx==0.28.1           # HTTP client used by FastAPI's TestClient
 debugpy==1.8.21         # VS Code debugger support

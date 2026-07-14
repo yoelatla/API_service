@@ -27,5 +27,20 @@ Open http://127.0.0.1:8000/docs to try the API (Swagger UI).
 
 ## Useful commands
 
-- **Inspect the DB:** `docker compose exec db psql -U interview_user -d interview_db` — opens a SQL shell inside the Postgres container. Then `SELECT * FROM items;` or `\d items`
+- **Inspect the DB:** `docker compose exec db psql -U interview_user -d interview_db` — opens a SQL shell inside the Postgres container.
 - **Stop Postgres:** `docker compose down` — stops and removes the container (data persists in the `db_data` volume)
+
+## Status codes
+
+**General meaning:**
+- **200 OK** — request succeeded, response body has content.
+- **204 No Content** — request succeeded, but there's nothing to send back.
+- **404 Not Found** — the requested resource doesn't exist at that URL/ID.
+
+These are part of the broader HTTP status code system: 2xx = success, 4xx = client error (bad request/missing resource), 5xx = server error.
+
+**In this API:**
+
+| Endpoint | Method | Success | Notes |
+|---|---|---|---|
+| `/` | GET | 200 | Health check |

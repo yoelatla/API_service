@@ -1,7 +1,6 @@
-fastapi==0.139.0        # web framework your app is built on — it takes incoming HTTP requests and routes them to your Python functions 
+fastapi==0.139.0        # web framework your app is built on — it takes incoming HTTP requests and routes them to your Python functions
 uvicorn[standard]==0.51.0  # ASGI server that runs FastAPI
-sqlalchemy==2.0.51      # ORM
+sqlalchemy==2.0.51      # ORM (database.py)
 psycopg2-binary==2.9.12 # Postgres driver used by SQLAlchemy
-python-dotenv==1.2.2    # loads .env into environment variables
+python-dotenv==1.2.2    # loads .env into environment variables (database.py)
 pydantic==2.13.4        # request/response validation (schemas.py)
-debugpy==1.8.21         # VS Code debugger support

@@ -1,45 +1,31 @@
 # Setup
 
-1. **First time only** — start Postgres (via Docker):
-```
-docker compose up -d
-```
-This runs Postgres with the user/password/db already set (`interview_user` / `interview_pass` / `interview_db`, port 5434). After the first time, it keeps running in the background — no need to redo this unless you rebooted or ran `docker compose down`.
+## First time only
 
-2. **First time only** — create venv + install:
 ```
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+docker compose up -d               # starts the Postgres container in the background
+python -m venv venv                # creates a local Python environment in ./venv
+source venv/bin/activate           # activates it (Windows: venv\Scripts\activate)
+pip install -r requirements.txt    # installs the project's Python packages into venv
 ```
-Re-run `pip install -r requirements.txt` only if `requirements.txt` changes later.
 
-3. **First time only** — `.env` should contain:
+`.env` should contain:
 ```
 DATABASE_URL=postgresql://interview_user:interview_pass@localhost:5434/interview_db
 ```
 
-4. **First time, and again any time the schema changes** — apply migrations (creates the `items` table):
+If Docker fails with "Cannot connect to the Docker daemon", start it with `docker desktop start` (or open Docker Desktop), then retry.
+
+## Every time you work
+
 ```
-alembic upgrade head
+source venv/bin/activate    # activates the Python environment (needed every new terminal)
+uvicorn main:app --reload   # starts the API server, restarts automatically on code changes
 ```
 
-5. **Every time you start working** — activate the venv (if not already active) and run the server:
-```
-source venv/bin/activate
-uvicorn main:app --reload
-```
-`--reload` means you don't need to restart this for code changes — only if the server crashes or you close the terminal.
+Open http://127.0.0.1:8000/docs to try the API (Swagger UI).
 
-6. Verify: open http://127.0.0.1:8000/docs — Swagger UI, test POST /items then GET /items.
+## Useful commands
 
-7. **Any time you want to check nothing broke** — run tests (Postgres must be running):
-```
-python -m pytest -v
-```
-
-8. **Any time you want to inspect the DB directly** — open a psql shell into the running container:
-```
-docker compose exec db psql -U interview_user -d interview_db
-```
-Then e.g. `SELECT * FROM items;` or `\d items` to see the schema.
+- **Inspect the DB:** `docker compose exec db psql -U interview_user -d interview_db` — opens a SQL shell inside the Postgres container. Then `SELECT * FROM items;` or `\d items`
+- **Stop Postgres:** `docker compose down` — stops and removes the container (data persists in the `db_data` volume)
